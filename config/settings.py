@@ -1,7 +1,10 @@
 from pathlib import Path
 from decouple import config
+import dj_database_url
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATABASE_URL = config('DATABASE_URL', default=None)
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=True, cast=bool)
@@ -67,6 +70,22 @@ DATABASES = {
     }
 }
 
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'prueba_db',
+            'USER': 'prueba_user',
+            'PASSWORD': 'prueba_pass',
+            'HOST': 'db',
+            'PORT': '5432',
+        }
+    }
+
 AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
@@ -120,3 +139,4 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 FRONTEND_URL = config('FRONTEND_URL', default='http://localhost:3000')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
