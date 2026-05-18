@@ -6,17 +6,23 @@ User = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=6)
+    confirm_password = serializers.CharField(write_only=True, min_length=6)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'role']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'role']
+
+    def validate(self, data):
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError({'confirm_password': 'Las contraseñas no coinciden.'})
+        return data
 
     def create(self, validated_data):
-        # create_user hashea la contraseña automáticamente — nunca se guarda en texto plano
+        validated_data.pop('confirm_password')
         return User.objects.create_user(**validated_data)
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'role']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'role']
