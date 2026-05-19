@@ -91,3 +91,8 @@ Clean Code — Nombres descriptivos, funciones pequeñas, comentarios útiles
 Logging avanzado — Cada request registra método, ruta, status, tiempo y usuario
 RBAC — Control de acceso granular por rol
 Seguridad — Contraseñas hasheadas, tokens JWT de corta vida
+
+Usuario Administrador
+
+Usuario: admin@admin.com
+Contrasena: Admin1234
