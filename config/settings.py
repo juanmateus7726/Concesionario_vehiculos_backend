@@ -6,10 +6,9 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATABASE_URL = config('DATABASE_URL', default=None)
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY', default='dev-secret-key-change-in-prod')
 DEBUG = config('DEBUG', default=True, cast=bool)
-
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -135,8 +134,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 FRONTEND_URL = config('FRONTEND_URL', default='http://localhost:3000')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
