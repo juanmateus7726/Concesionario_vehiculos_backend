@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "python manage.py migrate && python manage.py shell -c \"from django.contrib.auth import get_user_model; U = get_user_model(); U.objects.filter(username='admin').delete(); U.objects.create_superuser('admin', 'admin@admin.com', 'Admin1234')\" && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py shell -c \"from users.models import User; User.objects.filter(username__in=['admin','viewer']).delete(); User.objects.create_superuser(username='admin', email='admin@admin.com', password='Admin1234', role='admin'); User.objects.create_user(username='viewer', email='viewer@viewer.com', password='Viewer1234', role='viewer')\" && python manage.py runserver 0.0.0.0:8000"]

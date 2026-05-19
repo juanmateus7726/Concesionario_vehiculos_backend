@@ -94,5 +94,10 @@ Seguridad — Contraseñas hasheadas, tokens JWT de corta vida
 
 Usuario Administrador
 
-Usuario: admin@admin.com
+Usuario: admin
 Contrasena: Admin1234
+
+Usuario Visita
+
+Usuario: viewer
+Contrasena: Viewer1234
